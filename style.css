@@ -19,6 +19,7 @@
 
 body {
     background-color: var(--dark);
+    background-image: url('https://www.transparenttextures.com/patterns/silk-weave.png');
     color: var(--cream);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -73,6 +74,41 @@ h1, h2, h3, .sacred-symbol, .sacred-om {
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Music Toggle */
+.music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    background: var(--glass);
+    padding: 10px 15px;
+    border-radius: 50px;
+    border: 1px solid var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+    box-shadow: 0 0 15px var(--gold);
+    transform: scale(1.05);
+}
+
+.temple-bell {
+    font-size: 1.2rem;
+    animation: ring 3s infinite;
+}
+
+@keyframes ring {
+    0%, 100% { transform: rotate(0); }
+    10%, 30% { transform: rotate(15deg); }
+    20%, 40% { transform: rotate(-15deg); }
+    50% { transform: rotate(0); }
 }
 
 /* Loader */
@@ -148,17 +184,48 @@ h1, h2, h3, .sacred-symbol, .sacred-om {
     max-width: 800px;
 }
 
+.ganesha-shloka {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    line-height: 1.8;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
 .sacred-om {
     font-size: 3rem;
     color: var(--gold);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
     text-shadow: 0 0 20px var(--saffron);
 }
 
+.ganesha-container {
+    width: 250px;
+    margin: 0 auto 20px;
+}
+
+.ganesha-img {
+    width: 100%;
+    filter: drop-shadow(0 0 20px var(--gold));
+    animation: floatGanesha 6s ease-in-out infinite;
+}
+
+@keyframes floatGanesha {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
 .main-heading {
-    font-size: 4.5rem;
-    color: var(--saffron);
+    font-size: 5rem;
+    color: var(--gold);
     margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--gold), var(--saffron), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 .sub-heading {

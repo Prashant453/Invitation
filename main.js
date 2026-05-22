@@ -75,8 +75,32 @@ const createFlower = () => {
     }, duration * 1000);
 };
 
-// Start producing flowers
-setInterval(createFlower, 500);
+const createSparkle = () => {
+    if (!flowerContainer) return;
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('flower'); // reuse class for generic properties
+    sparkle.innerText = '✨';
+    sparkle.style.left = `${Math.random() * 100}%`;
+    sparkle.style.top = `${Math.random() * 100}%`;
+    sparkle.style.fontSize = `${10 + Math.random() * 15}px`;
+    sparkle.style.opacity = '0';
+    sparkle.style.position = 'fixed';
+    sparkle.style.color = '#D4AF37';
+    sparkle.style.textShadow = '0 0 10px #D4AF37';
+    sparkle.style.transition = 'opacity 1s ease';
+    
+    flowerContainer.appendChild(sparkle);
+    
+    setTimeout(() => sparkle.style.opacity = '0.8', 100);
+    setTimeout(() => {
+        sparkle.style.opacity = '0';
+        setTimeout(() => sparkle.remove(), 1000);
+    }, 2000);
+};
+
+// Start producing flowers and sparkles
+setInterval(createFlower, 800);
+setInterval(createSparkle, 300);
 
 // Loader Logic
 window.addEventListener('load', () => {
@@ -88,6 +112,20 @@ window.addEventListener('load', () => {
             revealOnScroll(); // Initial reveal
         }, 1000);
     }, 1500);
+});
+
+// Music Toggle Interaction
+const musicToggle = document.getElementById('musicToggle');
+musicToggle.addEventListener('click', () => {
+    musicToggle.classList.toggle('active');
+    const span = musicToggle.querySelector('span');
+    if (musicToggle.classList.contains('active')) {
+        span.innerText = "संगीत चालू";
+        musicToggle.style.background = "rgba(244, 145, 30, 0.2)";
+    } else {
+        span.innerText = "संगीत";
+        musicToggle.style.background = "rgba(255, 253, 208, 0.1)";
+    }
 });
 
 // Smooth Scroll for Navigation (if added later)
