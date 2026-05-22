@@ -76,34 +76,6 @@ h1, h2, h3, .sacred-symbol, .sacred-om {
     transform: translateY(0);
 }
 
-/* Music Toggle */
-.music-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    cursor: pointer;
-    background: var(--glass);
-    padding: 10px 15px;
-    border-radius: 50px;
-    border: 1px solid var(--gold-light);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.music-toggle:hover {
-    box-shadow: 0 0 15px var(--gold);
-    transform: scale(1.05);
-}
-
-.temple-bell {
-    font-size: 1.2rem;
-    animation: ring 3s infinite;
-}
-
 @keyframes ring {
     0%, 100% { transform: rotate(0); }
     10%, 30% { transform: rotate(15deg); }
@@ -202,7 +174,7 @@ h1, h2, h3, .sacred-symbol, .sacred-om {
 }
 
 .ganesha-container {
-    width: 250px;
+    width: 200px;
     margin: 0 auto 20px;
 }
 
