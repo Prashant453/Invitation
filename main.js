@@ -47,26 +47,31 @@ const revealOnScroll = () => {
 
 window.addEventListener('scroll', revealOnScroll);
 
+// Dynamic limits for animations based on screen size
+const isMobile = window.innerWidth < 768;
+const maxFloatingElements = isMobile ? 12 : 30;
+
 // Floating Flowers Logic
 const flowerContainer = document.getElementById('flower-container');
 const flowers = ['🌸', '🌼', '🌷', '🏵️'];
 
 const createFlower = () => {
     if (!flowerContainer) return;
+    if (flowerContainer.childElementCount >= maxFloatingElements) return;
     
     const flower = document.createElement('div');
     flower.classList.add('flower');
     flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
     
     const left = Math.random() * 100;
-    const duration = 10 + Math.random() * 20;
-    const size = 15 + Math.random() * 20;
+    const duration = isMobile ? (8 + Math.random() * 8) : (10 + Math.random() * 15);
+    const size = isMobile ? (12 + Math.random() * 12) : (15 + Math.random() * 20);
     
     flower.style.left = `${left}%`;
     flower.style.top = `-50px`;
     flower.style.animationDuration = `${duration}s`;
     flower.style.fontSize = `${size}px`;
-    flower.style.opacity = Math.random();
+    flower.style.opacity = Math.random() * 0.7 + 0.3;
     
     flowerContainer.appendChild(flower);
     
@@ -77,54 +82,44 @@ const createFlower = () => {
 
 const createSparkle = () => {
     if (!flowerContainer) return;
+    if (flowerContainer.childElementCount >= maxFloatingElements) return;
+    
     const sparkle = document.createElement('div');
     sparkle.classList.add('flower'); // reuse class for generic properties
     sparkle.innerText = '✨';
     sparkle.style.left = `${Math.random() * 100}%`;
     sparkle.style.top = `${Math.random() * 100}%`;
-    sparkle.style.fontSize = `${10 + Math.random() * 15}px`;
+    sparkle.style.fontSize = isMobile ? `${8 + Math.random() * 10}px` : `${10 + Math.random() * 15}px`;
     sparkle.style.opacity = '0';
     sparkle.style.position = 'fixed';
     sparkle.style.color = '#D4AF37';
     sparkle.style.textShadow = '0 0 10px #D4AF37';
-    sparkle.style.transition = 'opacity 1s ease';
+    sparkle.style.transition = 'opacity 0.8s ease';
     
     flowerContainer.appendChild(sparkle);
     
-    setTimeout(() => sparkle.style.opacity = '0.8', 100);
+    setTimeout(() => sparkle.style.opacity = '0.8', 50);
     setTimeout(() => {
         sparkle.style.opacity = '0';
-        setTimeout(() => sparkle.remove(), 1000);
-    }, 2000);
+        setTimeout(() => sparkle.remove(), 800);
+    }, 1500);
 };
 
-// Start producing flowers and sparkles
-setInterval(createFlower, 800);
-setInterval(createSparkle, 300);
+// Start producing flowers and sparkles with optimized intervals
+setInterval(createFlower, isMobile ? 1200 : 800);
+setInterval(createSparkle, isMobile ? 800 : 400);
 
 // Loader Logic
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
-    setTimeout(() => {
-        loader.style.opacity = '0';
+    if (loader) {
         setTimeout(() => {
-            loader.style.display = 'none';
-            revealOnScroll(); // Initial reveal
-        }, 1000);
-    }, 1500);
-});
-
-// Music Toggle Interaction
-const musicToggle = document.getElementById('musicToggle');
-musicToggle.addEventListener('click', () => {
-    musicToggle.classList.toggle('active');
-    const span = musicToggle.querySelector('span');
-    if (musicToggle.classList.contains('active')) {
-        span.innerText = "संगीत चालू";
-        musicToggle.style.background = "rgba(244, 145, 30, 0.2)";
-    } else {
-        span.innerText = "संगीत";
-        musicToggle.style.background = "rgba(255, 253, 208, 0.1)";
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                revealOnScroll(); // Initial reveal
+            }, 600); // match transition speed
+        }, 350); // fast transition
     }
 });
 
@@ -132,8 +127,12 @@ musicToggle.addEventListener('click', () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
 });
+
